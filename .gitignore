@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.vercel/
+.env*
+!.env.example
+test-results/
+*.log
+# 本地发布记录、预览与授权截图
+docs/
+# 原始错题照片留在本地；核对过的教学素材可放入 src 或 public
+uploads/
+raw-questions/
+
+.vercel
