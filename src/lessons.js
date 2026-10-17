@@ -1,18 +1,7 @@
-// 每道新题以独立课程加入；题目的条件、讲解和练习必须一起核对。
-export const lessons = [
-  { id: 'kite', tag: '生活里的角', title: '风筝飞得一样高吗？', short: '风筝与角度', intro: '两只风筝的线一样长。线与水平线的夹角，一个小、一个大，哪只风筝更高？', goal: '看懂角度怎样影响风筝的高度', steps: [
-    { title: '先让条件一样', text: '两根线都拉直，长度都是 30 米，握线的位置也一样高。我们只改变角度。', a: 30, b: 30 },
-    { title: '慢慢把蓝色的线抬起来', text: '蓝色的线从 30° 转到 60°。注意看：线没有变长，风筝却升高了。', a: 30, b: 60 },
-    { title: '看竖直的虚线', text: '竖直虚线表示风筝比握线处高多少。在 0°～90° 内，同样长的直线，角度越大，风筝越高。', a: 30, b: 60 }
-  ], quizState: { a: 30, b: 60 }, question: '线一样长，握线处一样高。30° 和 60°，哪只风筝更高？', options: ['30° 的橙色风筝', '60° 的蓝色风筝', '一样高'], answer: 1, explanation: '蓝色风筝更高！同样的线向上抬得更多，竖直方向的高度就更大。' },
-  { id: 'angle', tag: '认识角', title: '角，是怎样张开的？', short: '锐角、直角、钝角', intro: '想象一把慢慢打开的折扇。一条边不动，另一条边转起来，你能找到直角吗？', goal: '用转动认识锐角、直角和钝角', steps: [
-    { title: '从一个小角开始', text: '小于 90° 的角叫锐角。像折扇只打开了一小半。', a: 35 },
-    { title: '转到方方正正', text: '90° 的角叫直角。它像书本的一角，我们用小方框标记它。', a: 90 },
-    { title: '再打开一些', text: '大于 90°、小于 180° 的角叫钝角。继续到 180°，两条边成一条直线，就是平角。', a: 130 }
-  ], quizState: { a: 120 }, question: '一个角是 120°，它属于哪一种角？', options: ['锐角', '直角', '钝角'], answer: 2, explanation: '120° 比 90° 大，比 180° 小，所以是钝角。' },
-  { id: 'length', tag: '容易混淆', title: '边变长，角也会变大吗？', short: '角与边的长度', intro: '两条边的方向不变，把它们画长一点。这个角有没有变大？动手试一试吧。', goal: '分清角的大小与边的长度', steps: [
-    { title: '先看张开的口', text: '两条边张开的大小是 50°。记住中间这块小扇形。', a: 50, length: 140 },
-    { title: '把边画得长一些', text: '两条边都变长了，但它们的方向没有变，中间的 50° 也没有变。', a: 50, length: 250 },
-    { title: '找到真正的变化', text: '角的大小看两条边张开的程度，与画出的边有多长无关。要变大，就要把角张开。', a: 50, length: 250 }
-  ], quizState: { a: 50, length: 250 }, question: '两条边方向不变，只把边画长，角的大小会怎样？', options: ['变大', '不变', '变小'], answer: 1, explanation: '角的大小不变。边的方向没变，张开的程度就没有变。' }
-];
+import kite from './lessons/kite.js';
+import angle from './lessons/angle.js';
+import length from './lessons/length.js';
+import { defineLessons } from './lesson-model.js';
+
+// 新题独立放在 lessons/，导入并加入这里后就会出现在首页。
+export const lessons = defineLessons([kite, angle, length]);

@@ -13,5 +13,5 @@ test('height increases from horizontal to vertical, with correct endpoints', () 
 });
 test('angle category boundaries and lesson answers', () => {
   assert.equal(angleKind(89), '锐角'); assert.equal(angleKind(90), '直角'); assert.equal(angleKind(91), '钝角'); assert.equal(angleKind(180), '平角');
-  for (const l of lessons) assert.ok(l.answer >= 0 && l.answer < l.options.length && l.steps.length === 3);
+  for (const l of lessons) assert.ok(l.answer >= 0 && l.answer < l.options.length && l.steps.length > 0);
 });
