@@ -12,9 +12,9 @@ function Kite({ x, y, color }) {
   </g>;
 }
 function Cloud({ x, y, scale = 1 }) { return <g transform={`translate(${x} ${y}) scale(${scale})`} fill="white" opacity=".82"><ellipse cx="0" cy="0" rx="40" ry="12"/><circle cx="-14" cy="-10" r="17"/><circle cx="11" cy="-16" r="22"/></g>; }
-function AngleArc({ angle, x, y, radius, color }) {
+export function AngleArc({ angle, x, y, radius, color, strokeWidth = 1.5 }) {
   const r = angle * Math.PI / 180, endX = x+radius*Math.cos(r), endY=y-radius*Math.sin(r);
-  return <path d={`M ${x+radius} ${y} A ${radius} ${radius} 0 0 0 ${endX} ${endY} L ${x} ${y} Z`} fill={color} fillOpacity=".13" stroke={color} strokeWidth="1.5"/>;
+  return <path d={`M ${x+radius} ${y} A ${radius} ${radius} 0 0 0 ${endX} ${endY} L ${x} ${y} Z`} fill={color} fillOpacity=".13" stroke={color} strokeWidth={strokeWidth}/>;
 }
 export function KiteScene({ a, b, length, guides }) {
   const anchor = { x: 130, y: 366 }, p = kitePosition(a, length, anchor, 9), q = kitePosition(b, length, anchor, 9);
@@ -64,6 +64,6 @@ export function AngleScene({ angle, length, isLength }) {
     <text x="350" y="383" textAnchor="middle" fill="#6b7e73" className="svg-small">{isLength ? '角的大小看“张开多少”，不看“边有多长”' : '小于 90° 是锐角 · 90° 是直角 · 大于 90° 且小于 180° 是钝角'}</text>
   </svg>;
 }
-export function Slider({ label, value, unit='°', min=0, max=90, color, onChange, disabled }) {
-  return <div className="slider-row"><label><span>{color && <i style={{background:color}}/>}{label}</span><b style={{color}}>{Math.round(value)}{unit}</b></label><input aria-label={label} type="range" min={min} max={max} value={value} onChange={e=>onChange(Number(e.target.value))} disabled={disabled} style={{accentColor:color||'#557c64'}}/><div className="range-ticks"><span>{min}{unit}</span><span>{max}{unit}</span></div></div>;
+export function Slider({ label, value, unit='°', min=0, max=90, step=1, color, onChange, disabled }) {
+  return <div className="slider-row"><label><span>{color && <i style={{background:color}}/>}{label}</span><b style={{color}}>{Number(value.toFixed(step < 1 ? 1 : 0))}{unit}</b></label><input aria-label={label} type="range" min={min} max={max} step={step} value={value} onChange={e=>onChange(Number(e.target.value))} disabled={disabled} style={{accentColor:color||'#557c64'}}/><div className="range-ticks"><span>{min}{unit}</span><span>{max}{unit}</span></div></div>;
 }

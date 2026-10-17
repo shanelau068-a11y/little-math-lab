@@ -9,3 +9,13 @@ export function angleKind(angle) {
   if (angle < 180) return '钝角';
   return '平角';
 }
+
+// 同一顶点的两条边始终使用相同的缩放比例；等比例放大不能改变夹角。
+export function angleArms(angle, length, zoom = 1) {
+  const radians = angle * Math.PI / 180;
+  const scaledLength = length * zoom;
+  return {
+    horizontal: { x: scaledLength, y: 0 },
+    slanted: { x: scaledLength * Math.cos(radians), y: -scaledLength * Math.sin(radians) },
+  };
+}

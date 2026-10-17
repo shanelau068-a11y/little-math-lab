@@ -92,6 +92,10 @@ summary::-webkit-details-marker { display: none; }
 .answers .incorrect { background: #fbf0e6; border-color: #d8b893; }
 .feedback { font-size: 13px; line-height: 1.9; color: #7c9070; margin: 15px 0 0; min-height: 25px; }
 .bottom-back { margin-top: 20px; }
+.related-questions { margin-top: 24px; padding-top: 19px; border-top: 1px solid #e1e7dd; }
+.related-questions h2 { margin-bottom: 8px; color: #7e9275; font-size: 14px; font-weight: 550; }
+.related-questions p { font-size: 13px; color: #7b8b75; line-height: 1.9; margin-bottom: 6px; }
+.related-questions a { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; padding: 8px 0; font-size: 14px; color: #5a7d6a; }
 .notice { font-size: 13px; color: #7c9070; }
 .site-footer { max-width: 850px; margin: 30px auto 0; padding: 25px 28px 32px; color: #b0b7a7; font-size: 12px; }
 @media(max-width: 600px) {

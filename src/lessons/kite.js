@@ -41,5 +41,9 @@ export default {
   "exploreText": "把蓝色风筝从 30° 调到 60°。线没有变长，竖直高度怎样变化？",
   "sceneOptions": {
     "lineLength": 30
-  }
+  },
+  "related": [
+    "length",
+    "magnifier"
+  ]
 };

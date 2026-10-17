@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { animate, useReducedMotion } from 'motion/react';
 import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Pause, Play, RotateCcw, Volume2 } from 'lucide-react';
 import { lessons } from './lessons';
-import { questionIdFromHash, stateForStep } from './lesson-model';
+import { animationKeys, questionIdFromHash, stateForStep } from './lesson-model';
 import { LessonScene, SceneControls } from './components/LessonScene';
 import './style.css';
 
@@ -46,7 +46,7 @@ function Question({ lesson }) {
       ease: 'easeInOut',
       onUpdate: fraction => {
         const next = {};
-        for (const key of ['a', 'b', 'length']) next[key] = start[key] + (target[key] - start[key]) * fraction;
+        for (const key of animationKeys) next[key] = start[key] + (target[key] - start[key]) * fraction;
         current.current = next;
         setValues(next);
       },
@@ -110,6 +110,7 @@ function Question({ lesson }) {
 
   const caption = lesson.scene === 'kite'
     ? '线拉直、一样长，握线处一样高；角度是线与水平线的夹角（0°～90°），虚线高度从握线处算起。'
+    : lesson.scene === 'magnifier' ? '这是等比例放大的几何示意：两条边一起放大，没有拉伸或转动。'
     : '角的大小用“度”表示，写作 °。';
 
   return <main className="question-page">
@@ -136,6 +137,7 @@ function Question({ lesson }) {
       <div className="quiz-content"><h2>{lesson.question}</h2><div className="answers">{lesson.options.map((option, index) => <button key={index} className={choice === index ? index === lesson.answer ? 'correct' : 'incorrect' : ''} onClick={() => setChoice(index)}><span className="answer-letter">{String.fromCharCode(65 + index)}</span><span>{option}</span>{choice === index && index === lesson.answer && <Check size={18} />}</button>)}</div><p className="feedback" role="status">{choice === null ? '先选一个答案，再看看解释。' : choice === lesson.answer ? lesson.explanation : '再想一想，也可以回到动画里试一试。'}</p></div>
     </details>
     {notice && <p className="notice" role="status">{notice}</p>}
+    {lesson.related?.length > 0 && <section className="related-questions" aria-label="相关题目"><h2>再看一看</h2>{lesson.id === 'kite' && <p>线长不决定角的大小；比风筝高度时，要保持线长相同。</p>}{lesson.related.map(id => { const next = lessons.find(item => item.id === id); return <a key={id} href={`#/question/${id}`}>{next.title}<ChevronRight size={17} /></a>; })}</section>}
     <a className="bottom-back back-link" href="#/"><ArrowLeft size={17} />返回题目列表</a>
   </main>;
 }

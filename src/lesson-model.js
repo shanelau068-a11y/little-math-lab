@@ -1,9 +1,9 @@
-export const sceneTypes = ['kite', 'angle', 'length'];
-const stateKeys = ['a', 'b', 'length'];
-const defaultState = { a: 30, b: 30, length: 160 };
+export const sceneTypes = ['kite', 'angle', 'length', 'magnifier'];
+const defaultState = { a: 30, b: 30, length: 160, zoom: 1 };
+export const animationKeys = Object.keys(defaultState);
 
 function pickState(value) {
-  return Object.fromEntries(stateKeys.filter(key => value[key] !== undefined).map(key => [key, value[key]]));
+  return Object.fromEntries(animationKeys.filter(key => value[key] !== undefined).map(key => [key, value[key]]));
 }
 
 export function stateForStep(lesson, index) {
@@ -33,6 +33,7 @@ export function defineLessons(entries) {
         if (!Number.isFinite(value)) fail('动画参数必须是有限数值');
         if ((key === 'a' || key === 'b') && (value < 0 || value > (lesson.scene === 'kite' ? 90 : 180))) fail('角度超出场景范围');
         if (key === 'length' && (value < 100 || value > 270)) fail('画出的边长超出画布范围');
+        if (key === 'zoom' && (value < 1 || value > 2.4)) fail('放大倍数应在 1～2.4 之间');
       }
     };
     lesson.steps.forEach(step => {
@@ -41,6 +42,9 @@ export function defineLessons(entries) {
     });
     checkState(lesson.quizState);
     if (lesson.scene === 'kite' && (!(lesson.sceneOptions?.lineLength > 0) || lesson.sceneOptions.lineLength > 30)) fail('风筝线长必须在场景支持的范围内');
+  }
+  for (const lesson of entries) {
+    if (lesson.related !== undefined && (!Array.isArray(lesson.related) || lesson.related.some(id => !ids.has(id) || id === lesson.id))) throw new Error(`题目 ${lesson.id}：关联题目不存在或指向自己`);
   }
   return entries;
 }

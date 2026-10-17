@@ -25,3 +25,22 @@ test('question links survive refresh under the GitHub Pages path', () => {
   assert.equal(questionIdFromHash('#/'), null);
   assert.equal(questionIdFromHash('#/question/../../other'), null);
 });
+
+test('length and magnifier lessons keep the original 50 degree opening through all steps', () => {
+  for (const id of ['length', 'magnifier']) {
+    const lesson = lessons.find(item => item.id === id);
+    for (let index = 0; index < lesson.steps.length; index++) assert.equal(stateForStep(lesson, index).a, 50);
+  }
+  const lens = lessons.find(item => item.id === 'magnifier');
+  assert.equal(stateForStep(lens, 1).zoom, 2);
+  assert.equal(stateForStep(lens, 2).zoom, 2.4);
+  assert.equal(stateForStep(lens, lens.steps.length - 1).zoom, 1);
+  const side = lessons.find(item => item.id === 'length');
+  assert.ok(side.steps.some(step => step.length === 100) && side.steps.some(step => step.length === 250));
+});
+
+test('unrenderable zoom and broken related question links prevent publication', () => {
+  const lens = lessons.find(item => item.id === 'magnifier');
+  assert.throws(() => defineLessons([...lessons, { ...lens, id: 'invalid-zoom', quizState: { a: 50, zoom: 0 } }]), /放大倍数/);
+  assert.throws(() => defineLessons([...lessons, { ...lens, id: 'broken-link', related: ['missing-question'] }]), /关联题目/);
+});
